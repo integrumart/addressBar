@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import globalPluginHandler
 import ui
 import gui
@@ -6,6 +7,7 @@ import webbrowser
 from scriptHandler import script
 import addonHandler
 
+# Initialize translation
 addonHandler.initTranslation()
 
 class AddressDialog(wx.Dialog):
@@ -13,11 +15,11 @@ class AddressDialog(wx.Dialog):
 		super().__init__(parent, title=_("Address Bar"), style=wx.DEFAULT_DIALOG_STYLE)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		
-		# Mesaj ve Giriş Kutusu
+		# Label and Input Box
 		label = wx.StaticText(self, label=_("Address:"))
 		self.textCtrl = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
 		
-		# Butonlar Sizer (Yan yana dizilim)
+		# Buttons Sizer
 		btnSizer = wx.BoxSizer(wx.HORIZONTAL)
 		okBtn = wx.Button(self, wx.ID_OK, label=_("OK"))
 		cancelBtn = wx.Button(self, wx.ID_CANCEL, label=_("Cancel"))
@@ -45,11 +47,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description=_("Address Bar"),
 		category=_("Address Bar")
 	)
-	def script_openAddressInput(self, gesture):
-		# Freeze hatasını önlemek için wx.CallAfter kullanıyoruz
+	def script_openAddressInput(self, gesture): # camelCase
+		# Using wx.CallAfter to prevent freeze issues
 		wx.CallAfter(self.showDialog)
 
-	def showDialog(self):
+	def showDialog(self): # camelCase
 		with AddressDialog(gui.mainFrame) as dlg:
 			if dlg.ShowModal() == wx.ID_OK:
 				url = dlg.textCtrl.GetValue().strip()
